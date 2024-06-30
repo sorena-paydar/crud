@@ -1,4 +1,3 @@
-from django.shortcuts import get_object_or_404
 from django.http import JsonResponse, HttpResponseNotAllowed
 from .models import PostgresModel
 import json
@@ -33,7 +32,6 @@ def postgres_detail(request, pk):
         return JsonResponse({'error': f'Object with id {pk} not found'}, status=404)
 
     if request.method == 'GET':
-        # GET method to retrieve a specific object
         return JsonResponse({'id': obj.id, 'name': obj.name})
 
     elif request.method == 'PUT':
@@ -52,7 +50,6 @@ def postgres_detail(request, pk):
             return JsonResponse({'error': 'Invalid JSON format in request body'}, status=400)
 
     elif request.method == 'DELETE':
-        # DELETE method to delete a specific object
         try:
             obj.delete()
             return JsonResponse({'message': 'Object deleted successfully!'})
@@ -61,5 +58,4 @@ def postgres_detail(request, pk):
             return JsonResponse({'error': f'Object with id {pk} not found'}, status=404)
 
     else:
-        # Handle other HTTP methods
         return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
